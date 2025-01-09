@@ -48,12 +48,3 @@ def get_all_stations():
         pass
     return []
 
-def get_all_stations():
-    """Pobiera listę stacji GIOŚ."""
-    try:
-        resp = requests.get(STATIONS_URL)
-        if resp.status_code == 200:
-            return resp.json()
-    except:
-        pass
-    return []
