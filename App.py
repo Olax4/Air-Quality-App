@@ -136,4 +136,12 @@ def haversine(lat1, lon1, lat2, lon2):
     c = 2*math.atan2(math.sqrt(a), math.sqrt(1-a))
     return R*c
 
+def find_nearest_stations(lat, lon, stations):
+    result = []
+    for st in stations:
+        st_lat = float(st['gegrLat'])
+        st_lon = float(st['gegrLon'])
+        dist = haversine(lat, lon, st_lat, st_lon)
+        result.append((st, dist))
+    return sorted(result, key=lambda x: x[1])
 
