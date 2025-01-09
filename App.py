@@ -236,3 +236,43 @@ def calculate_voivodeship_averages(voiv):
             "color_class": cclass
         }
     return result
+def calculate_all_voivodeships_averages():
+    """
+    Województwa w wierszach, parametry w kolumnach.
+    """
+    stations = get_all_stations_cached()
+    voiv_dict = {}
+    for st in stations:
+        v1 = (st.get('addressVoivodeship') or "").strip().lower()
+        v2 = ""
+        if ('city' in st and 'commune' in st['city']
+            and 'provinceName' in st['city']['commune']):
+            v2 = (st['city']['commune']['provinceName'] or "").strip().lower()
+        final_voiv = v1 if v1 else v2
+        if not final_voiv:
+            continue
+        voiv_dict.setdefault(final_voiv, []).append(st)
+
+    all_result = {}
+    for voiv, st_list in voiv_dict.items():
+        param_sums = {}
+        for st in st_list:
+            sensors = get_sensors(st['id'])
+            for sens in sensors:
+                p = sens['param']['paramName']
+                vals = get_all_values(sens['id'])
+                if vals:
+                    if p not in param_sums:
+                        param_sums[p] = {"sum":0.0, "count":0}
+                    param_sums[p]["sum"] += sum(vals)
+                    param_sums[p]["count"] += len(vals)
+        voiv_result = {}
+        for p, sc in param_sums.items():
+            avg_val = sc["sum"]/sc["count"]
+            cclass = get_color_class(p, avg_val)
+            voiv_result[p] = {
+                "value_str": f"{avg_val:.2f} µg/m³",
+                "color_class": cclass
+            }
+        all_result[voiv] = voiv_result
+    return all_result
