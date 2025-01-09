@@ -284,3 +284,103 @@ def calculate_all_voivodeships_averages_cached():
     ALL_VOIV_CACHE["data"] = data
     ALL_VOIV_CACHE["timestamp"] = now
     return data
+@app.route('/', methods=['GET','POST'])
+def index():
+    pollutant_data = {}
+    hourly_plot_data = {}
+    voivodeship_averages = {}
+    chosen_voiv = ""
+    all_voiv_averages = {}
+
+    city_coords = None
+    nearest_station = None
+    distance = None
+
+    if request.method == 'POST':
+        city = request.form['city']
+        lat, lon = geocode_city(city)
+        if not lat or not lon:
+            return render_template(
+                'index.html',
+                error="Nie udało się znaleźć współrzędnych miasta.",
+                pollutant_data=pollutant_data,
+                voivodeship_averages=voivodeship_averages,
+                all_voiv_averages=all_voiv_averages
+            )
+
+        city_coords = (lat, lon)
+        stations = get_all_stations_cached()
+        st_sorted = find_nearest_stations(lat, lon, stations)
+        for st, dist in st_sorted:
+            if dist <= 20:
+                nearest_station = st
+                distance = dist
+                break
+
+        if not nearest_station:
+            return render_template(
+                'index.html',
+                error="Nie znaleziono stacji w promieniu 20 km.",
+                pollutant_data=pollutant_data,
+                city_coords=city_coords,
+                voivodeship_averages=voivodeship_averages,
+                all_voiv_averages=all_voiv_averages
+            )
+
+        # Bieżące dane
+        sensors = get_sensors(nearest_station['id'])
+        for sens in sensors:
+            param_name = sens['param']['paramName']
+            val = get_latest_value(sens['id'])
+            if val is not None:
+                cclass = get_color_class(param_name, val)
+                pollutant_data[param_name] = {
+                    "value_str": f"{val:.1f} µg/m³",
+                    "color_class": cclass
+                }
+            else:
+                pollutant_data[param_name] = {
+                    "value_str": "Brak danych",
+                    "color_class": "level-unknown"
+                }
+
+            # Wykresy godzinowe
+            data_points = get_hourly_data(sens['id'])
+            if data_points:
+                hourly_plot_data[param_name] = data_points
+
+        # Województwo
+        if 'addressVoivodeship' in nearest_station and nearest_station['addressVoivodeship']:
+            chosen_voiv = nearest_station['addressVoivodeship']
+        if ('city' in nearest_station and 'commune' in nearest_station['city']
+            and 'provinceName' in nearest_station['city']['commune']):
+            if not chosen_voiv:
+                chosen_voiv = nearest_station['city']['commune']['provinceName']
+
+        if chosen_voiv:
+            voivodeship_averages = calculate_voivodeship_averages(chosen_voiv)
+
+        all_voiv_averages = calculate_all_voivodeships_averages_cached()
+
+        return render_template(
+            'index.html',
+            city=city,
+            nearest_station=nearest_station,
+            distance=distance,
+            pollutant_data=pollutant_data,
+            city_coords=city_coords,
+            hourly_plot_data=hourly_plot_data,
+            voivodeship_averages=voivodeship_averages,
+            chosen_voiv=chosen_voiv,
+            all_voiv_averages=all_voiv_averages
+        )
+
+    # GET
+    return render_template(
+        'index.html',
+        pollutant_data=pollutant_data,
+        city_coords=city_coords,
+        hourly_plot_data=hourly_plot_data,
+        voivodeship_averages=voivodeship_averages,
+        all_voiv_averages=all_voiv_averages
+    )
