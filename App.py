@@ -276,3 +276,11 @@ def calculate_all_voivodeships_averages():
             }
         all_result[voiv] = voiv_result
     return all_result
+def calculate_all_voivodeships_averages_cached():
+    now = time.time()
+    if ALL_VOIV_CACHE["data"] and (now - ALL_VOIV_CACHE["timestamp"] < ALL_VOIV_CACHE_TTL):
+        return ALL_VOIV_CACHE["data"]
+    data = calculate_all_voivodeships_averages()
+    ALL_VOIV_CACHE["data"] = data
+    ALL_VOIV_CACHE["timestamp"] = now
+    return data
