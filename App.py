@@ -37,3 +37,23 @@ def geocode_city(city):
     except requests.RequestException as e:
         print(f"Błąd geokodowania: {e}")
     return None, None
+
+def get_all_stations():
+    """Pobiera listę stacji GIOŚ."""
+    try:
+        resp = requests.get(STATIONS_URL)
+        if resp.status_code == 200:
+            return resp.json()
+    except:
+        pass
+    return []
+
+def get_all_stations():
+    """Pobiera listę stacji GIOŚ."""
+    try:
+        resp = requests.get(STATIONS_URL)
+        if resp.status_code == 200:
+            return resp.json()
+    except:
+        pass
+    return []
