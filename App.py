@@ -48,3 +48,13 @@ def get_all_stations():
         pass
     return []
 
+def get_all_stations_cached():
+    now = time.time()
+    if STATIONS_CACHE["data"] and (now - STATIONS_CACHE["timestamp"] < STATIONS_CACHE_TTL):
+        return STATIONS_CACHE["data"]
+    print("[CACHE] Odświeżam stacje GIOŚ...")
+    data = get_all_stations()
+    STATIONS_CACHE["data"] = data
+    STATIONS_CACHE["timestamp"] = now
+    return data
+
