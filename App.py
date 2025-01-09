@@ -58,3 +58,12 @@ def get_all_stations_cached():
     STATIONS_CACHE["timestamp"] = now
     return data
 
+def get_sensors(station_id):
+    try:
+        r = requests.get(SENSORS_URL + str(station_id))
+        if r.status_code == 200:
+            return r.json()
+    except:
+        pass
+    return []
+
