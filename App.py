@@ -14,3 +14,9 @@ DATA_URL = "https://api.gios.gov.pl/pjp-api/rest/data/getData/"
 GEOCODING_URL = "https://maps.googleapis.com/maps/api/geocode/json"
 
 API_KEY = "xxxxx"  # <--  klucz do Google Maps
+
+# Cache
+STATIONS_CACHE = {"data": None, "timestamp": 0}
+STATIONS_CACHE_TTL = 60 * 10
+ALL_VOIV_CACHE = {"data": None, "timestamp": 0}
+ALL_VOIV_CACHE_TTL = 60 * 30
