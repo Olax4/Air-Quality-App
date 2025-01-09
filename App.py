@@ -202,3 +202,37 @@ def get_color_class(param_name, value):
         else:                       return "level-very-poor"
     return "level-unknown"
 
+def calculate_voivodeship_averages(voiv):
+    """Średnie w danym województwie."""
+    stations = get_all_stations_cached()
+    voiv_stations = []
+    for st in stations:
+        v1 = (st.get('addressVoivodeship') or "").lower()
+        v2 = ""
+        if ('city' in st and 'commune' in st['city']
+            and 'provinceName' in st['city']['commune']):
+            v2 = (st['city']['commune']['provinceName'] or "").lower()
+        if (v1 == voiv.lower() or v2 == voiv.lower()):
+            voiv_stations.append(st)
+
+    param_sums = {}
+    for st in voiv_stations:
+        sensors = get_sensors(st['id'])
+        for sens in sensors:
+            p = sens['param']['paramName']
+            vals = get_all_values(sens['id'])
+            if vals:
+                if p not in param_sums:
+                    param_sums[p] = {"sum": 0.0, "count": 0}
+                param_sums[p]["sum"] += sum(vals)
+                param_sums[p]["count"] += len(vals)
+
+    result = {}
+    for p, sc in param_sums.items():
+        avg_val = sc["sum"]/sc["count"]
+        cclass = get_color_class(p, avg_val)
+        result[p] = {
+            "value_str": f"{avg_val:.2f} µg/m³",
+            "color_class": cclass
+        }
+    return result
