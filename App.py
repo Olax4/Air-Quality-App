@@ -79,4 +79,15 @@ def get_all_values(sensor_id):
     except:
         pass
     return vals
+def get_latest_value(sensor_id):
+    try:
+        r = requests.get(DATA_URL + str(sensor_id))
+        if r.status_code == 200:
+            data = r.json()
+            for v in data.get('values', []):
+                if v['value'] is not None:
+                    return float(v['value'])
+    except:
+        pass
+    return None
 
