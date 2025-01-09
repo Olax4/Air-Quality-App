@@ -20,3 +20,20 @@ STATIONS_CACHE = {"data": None, "timestamp": 0}
 STATIONS_CACHE_TTL = 60 * 10
 ALL_VOIV_CACHE = {"data": None, "timestamp": 0}
 ALL_VOIV_CACHE_TTL = 60 * 30
+
+def geocode_city(city):
+    """
+    Zwraca (lat, lon) przy pomocy Google Geocoding API,
+    lub (None, None) w przypadku błędu.
+    """
+    params = {'address': city, 'key': API_KEY}
+    try:
+        r = requests.get(GEOCODING_URL, params=params)
+        if r.status_code == 200:
+            js = r.json()
+            if js.get('results'):
+                loc = js['results'][0]['geometry']['location']
+                return loc['lat'], loc['lng']
+    except requests.RequestException as e:
+        print(f"Błąd geokodowania: {e}")
+    return None, None
