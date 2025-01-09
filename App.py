@@ -122,3 +122,18 @@ def get_hourly_data(sensor_id):
         pass
     return []
 
+def haversine(lat1, lon1, lat2, lon2):
+    import math
+    R = 6371.0
+    lat1r = math.radians(lat1)
+    lon1r = math.radians(lon1)
+    lat2r = math.radians(lat2)
+    lon2r = math.radians(lon2)
+    dlat = lat2r - lat1r
+    dlon = lon2r - lon1r
+    a = (math.sin(dlat/2)**2
+         + math.cos(lat1r)*math.cos(lat2r)*math.sin(dlon/2)**2)
+    c = 2*math.atan2(math.sqrt(a), math.sqrt(1-a))
+    return R*c
+
+
