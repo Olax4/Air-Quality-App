@@ -145,3 +145,60 @@ def find_nearest_stations(lat, lon, stations):
         result.append((st, dist))
     return sorted(result, key=lambda x: x[1])
 
+def get_color_class(param_name, value):
+    """
+    Zwraca klasę CSS (level-very-good, level-good, etc.) zależnie od parametru i wartości.
+    """
+    name_map = {
+        "PM10": "PM10",
+        "PYŁ ZAWIESZONY PM10": "PM10",
+        "PM2.5": "PM2.5",
+        "PYŁ ZAWIESZONY PM2.5": "PM2.5",
+        "DWUTLENEK AZOTU": "NO2",
+        "NO2": "NO2",
+        "DWUTLENEK SIARKI": "SO2",
+        "SO2": "SO2",
+        "OZON": "O3",
+        "O3": "O3"
+    }
+    def between(x, a, b):
+        return (x>a and x<=b)
+
+    short = name_map.get(param_name.upper(), param_name.upper())
+    if short == "PM10":
+        if 0 <= value <= 20: return "level-very-good"
+        elif between(value,20,50): return "level-good"
+        elif between(value,50,80): return "level-fair"
+        elif between(value,80,110):return "level-moderate"
+        elif between(value,110,150):return "level-poor"
+        else:                      return "level-very-poor"
+    elif short == "PM2.5":
+        if 0 <= value <= 13:     return "level-very-good"
+        elif between(value,13,35):   return "level-good"
+        elif between(value,35,55):   return "level-fair"
+        elif between(value,55,75):   return "level-moderate"
+        elif between(value,75,110):  return "level-poor"
+        else:                       return "level-very-poor"
+    elif short == "NO2":
+        if 0 <= value <= 40:     return "level-very-good"
+        elif between(value,40,100):  return "level-good"
+        elif between(value,100,150): return "level-fair"
+        elif between(value,150,200): return "level-moderate"
+        elif between(value,200,300): return "level-poor"
+        else:                       return "level-very-poor"
+    elif short == "O3":
+        if 0 <= value <= 70:     return "level-very-good"
+        elif between(value,70,120):  return "level-good"
+        elif between(value,120,150): return "level-fair"
+        elif between(value,150,180): return "level-moderate"
+        elif between(value,180,240): return "level-poor"
+        else:                       return "level-very-poor"
+    elif short == "SO2":
+        if 0 <= value <= 50:     return "level-very-good"
+        elif between(value,50,100):  return "level-good"
+        elif between(value,100,200): return "level-fair"
+        elif between(value,200,350): return "level-moderate"
+        elif between(value,350,500): return "level-poor"
+        else:                       return "level-very-poor"
+    return "level-unknown"
+
