@@ -67,3 +67,16 @@ def get_sensors(station_id):
         pass
     return []
 
+def get_all_values(sensor_id):
+    vals = []
+    try:
+        r = requests.get(DATA_URL + str(sensor_id))
+        if r.status_code == 200:
+            data = r.json()
+            for v in data.get('values', []):
+                if v['value'] is not None:
+                    vals.append(float(v['value']))
+    except:
+        pass
+    return vals
+
