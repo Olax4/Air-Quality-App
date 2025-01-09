@@ -91,3 +91,34 @@ def get_latest_value(sensor_id):
         pass
     return None
 
+def get_hourly_data(sensor_id):
+    """
+    Zwraca listę (godzina, wartość) dla pomiarów od 00:00 do ostatniej pełnej godziny.
+    """
+    try:
+        r = requests.get(DATA_URL + str(sensor_id))
+        if r.status_code == 200:
+            data = r.json()
+            vals = data.get('values', [])
+            now = datetime.now()
+            start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+            last_full_hour = now.replace(minute=0, second=0, microsecond=0)
+
+            filtered = []
+            for v in vals:
+                if v['value'] is None:
+                    continue
+                dt_str = v['date']
+                dt = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
+                if start_of_day <= dt <= last_full_hour:
+                    filtered.append((dt, float(v['value'])))
+            filtered.sort(key=lambda x: x[0])
+            result = []
+            for dt_obj, val in filtered:
+                hour_label = dt_obj.strftime("%H:%M")
+                result.append((hour_label, val))
+            return result
+    except:
+        pass
+    return []
+
