@@ -114,4 +114,25 @@ button:hover {
     border: 1px solid #ccc; /* szara ramka */
     border-radius: 4px; /* zaokrąglone rogi */
 }
+/* Wykresy */
+.chart-block {
+    margin-bottom: 20px; /* Dodaje odstęp między blokami wykresów */
+}
+.chart-block canvas {
+    width: 400px !important; /* Ustawia szerokość elementu <canvas> na 400px */
+    height: 200px !important; /* Ustawia wysokość elementu <canvas> na 200px */
+    display: block; /* Element <canvas> wyświetlany jako blok */
+    margin: 0 auto; /* Wyrównanie do środka poprzez automatyczne marginesy */
+}
+
+/* Responsywność - dla ekranów o szerokości max 768px */
+@media (max-width: 768px) {
+    .single-container {
+        max-width: 600px; /* Ograniczenie szerokości kontenera do 600px na mniejszych ekranach */
+    }
+    .chart-block canvas {
+        width: 100% !important; /* Dopasowanie szerokości <canvas> do szerokości kontenera */
+        height: 200px !important; /* Wysokość <canvas> pozostaje bez zmian */
+    }
+}
 
