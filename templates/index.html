@@ -17,4 +17,69 @@
     <div class="single-container"> <!-- Kontener dla pojedynczego elementu w wierszu. -->
       <h1 style="font-size:3em;">Jakość Powietrza</h1> <!--tytuł: „Jakość Powietrza”, Zwiększa rozmiar czcionki o 300% w stosunku do domyślnego -->
 
-       
+       <!-- Tabela z zakresami indeksu -->
+      <h3>Zakresy wartości indeksu powietrza</h3> <!--Nagłówek trzeciego poziomu -->
+      <div class="table-container"> <!-- Zewnętrzny kontener tabeli, który zapewnia stylizację -->
+        <table> <!--Tworzy strukturę tabeli -->
+          <thead> <!--Sekcja nagłówka tabeli zawiera opisy kolumn -->
+            <tr>
+              <th>Indeks</th>
+              <th>PM10</th>
+              <th>PM2.5</th>
+              <th>O3</th>
+              <th>NO2</th>
+              <th>SO2</th>
+            </tr>
+          </thead>
+          <tbody> <!--Zawiera dane dotyczące poziomów jakości powietrza -->
+            <tr>
+              <td class="level-very-good">Bardzo dobry</td>
+              <td>0 - 20</td>
+              <td>0 - 13</td>
+              <td>0 - 70</td>
+              <td>0 - 40</td>
+              <td>0 - 50</td>
+            </tr>
+            <tr>
+              <td class="level-good">Dobry</td>
+              <td>20.1 - 50</td>
+              <td>13.1 - 35</td>
+              <td>70.1 - 120</td>
+              <td>40.1 - 100</td>
+              <td>50.1 - 100</td>
+            </tr>
+            <tr>
+              <td class="level-fair">Umiarkowany</td>
+              <td>50.1 - 80</td>
+              <td>35.1 - 55</td>
+              <td>120.1 - 150</td>
+              <td>100.1 - 150</td>
+              <td>100.1 - 200</td>
+            </tr>
+            <tr>
+              <td class="level-moderate">Dostateczny</td>
+              <td>80.1 - 110</td>
+              <td>55.1 - 75</td>
+              <td>150.1 - 180</td>
+              <td>150.1 - 200</td>
+              <td>200.1 - 350</td>
+            </tr>
+            <tr>
+              <td class="level-poor">Zły</td>
+              <td>110.1 - 150</td>
+              <td>75.1 - 110</td>
+              <td>180.1 - 240</td>
+              <td>200.1 - 300</td>
+              <td>350.1 - 500</td>
+            </tr>
+            <tr>
+              <td class="level-very-poor">Bardzo zły</td>
+              <td>> 150</td>
+              <td>> 110</td>
+              <td>> 240</td>
+              <td>> 300</td>
+              <td>> 500</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
