@@ -35,3 +35,15 @@ p {
     box-sizing: border-box; /* Włącza liczenie paddingu  */
 }
 
+/* Pojedynczy kontener */
+
+.single-container {
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); /*  Dodaje delikatny cień */
+    border-radius: 8px;/*  Zaokrąglenie rogów */
+    padding: 20px;
+    margin: 10px;
+    max-width: 1000px; /* Ogranicza szerokość kontenera do 1000px */
+    width: 100%; /* Kontener zajmuje całą szerokość, o ile mieści się w limicie  */
+    text-align: center;
+}
