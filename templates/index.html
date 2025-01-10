@@ -204,3 +204,25 @@
           </table>
         </div>
 
+<!-- Mapa -->
+        <div id="map"></div> <!-- Kontener dla interaktywnej mapy renderowanej za pomocą biblioteki Leaflet -->
+
+        <!-- Przycisk "Dowiedz się więcej" zielony -->
+        <button type="button" style="background-color:#8aea92;" onclick="showMoreInfo()">Dowiedz się więcej</button>  <!--  Przycisk z tekstem na zielonym tle z wywołaniem funkcji JavaScript, która wyświetla ukryty kontener z dodatkowymi informacjami -->
+
+        <!-- Kontener info -->
+        <div id="more-info" style="display:none; margin-top:20px; text-align:left;"> <!-- Ukryty kontener, wyświetlany po kliknięciu przycisku. -->
+          <h3>Dodatkowe informacje o zanieczyszczeniach</h3>
+          <ul>
+            <li><strong>Pył zawieszony PM2.5</strong> – to aerozole atmosferyczne, których średnica nie jest większa niż 2.5 mikrometra. Tego rodzaju pył zawieszony jest uznawany za najgroźniejszy dla zdrowia człowieka.ył zawieszony PM2,5 jest odpowiedzialny za: nasilenie astmy ,osłabienie czynności płuc ,nowotwory płuc, gardła i krtani ,miażdżycę ,niższą masą urodzeniową dziecka i problemy z oddychaniem, gdy było ono narażone na kontakt z pyłami w trakcie rozwoju płodowego ,nasilenie objawów chorób związanych z układem krwionośnym i oddechowym..</li>
+            <li><strong>Pył zawieszony PM10</strong> – to mieszanina zawieszonych w powietrzu cząsteczek, których średnica nie przekracza 10 mikrometrów. Jest szkodliwy z uwagi na zawartość takich elementów jak benzopireny, furany, dioksyny – rakotwórczych metali ciężkich.</li>
+            <li><strong>Dwutlenek siarki (SO2)</strong> – jest jednym z najbardziej rozpowszechnionych gazów zanieczyszczających powietrze atmosferyczne, emitowanym przez ciepłownie i inne zakłady przemysłowe, które jako źródła energii używają paliw kopalnych zawierających domieszki siarki oraz jej związków. Wysokie stężenia SO2 wpływają niekorzystnie na układ oddechowy, uszkadzając nabłonek dróg oddechowych (nos, gardło, płuca) oraz powodując ich zwężenie.</li>
+            <li><strong>Dwutlenek azotu (NO2)</strong> – ednym z głównych źródeł ich emisji jest transport drogowy. NO2 jest jednym z najbardziej szkodliwych składników smogu. Powoduje schorzenia tj.: astma oskrzelowa,przewlekła obturacyjna choroba płuc,choroby układu sercowo-naczyniowego ,nowotwory, w szczególności płuc i piersi.</li>
+            <li><strong>Tlenek węgla (CO)</strong> – Tlenek węgla CO, potocznie nazywany czadem jest gazem silnie toksycznym. Oddychanie powietrzem zanieczyszczonym CO może wywoływać ból głowy, zawroty głowy, wymioty i nudności. Najwyższe stężenia CO obserwowane są najczęściej na zatłoczonych drogach. Problem może nasilać się zimą, gdy do emisji z transportu „dokłada się” emisja z systemów grzewczych w gospodarstwach domowych.</li>
+            <li><strong>Benzen</strong> – jest jednym z najbardziej rozpowszechnionych w środowisku związków organicznych. Jego toksyczny, rakotwórczy i genotoksyczny wpływ na zdrowie jest dobrze udokumentowany naukowo. Ze względu na możliwe poziomy stężeń oraz źródła emisji, najwyższy poziom ryzyka dotyczy głównie stanowisk pracy oraz zanieczyszczenia powietrza wewnątrz pomieszczeń mieszkalnych. Wykazuje ostre toksyczne działanie w wysokich stężeniach. Ozon znajdujący się w stratosferze (ok. 10 – 50 km nad powierzchnią Ziemi), chroni ją przed nadmiernym promieniowaniem ultrafioletowym. Ozon w dolnej warstwie atmosfery (troposferze) jest zanieczyszczeniem powietrza. Podwyższone stężenie ozonu w powietrzu może prowadzić do reakcji zapalnych oczu czy chorób dróg oddechowych, w tym nasilenia objawów astmy oraz zmniejszenia wydolności płuc. </li>
+            <li><strong>Ozon (O3)</strong> – jest jedną z odmian tlenu. Cząsteczki tlenu zbudowane są z dwóch atomów tlenu, natomiast ozon z trzech (O3). Ozon ma właściwości utleniające i w zależności od tego, w której warstwie atmosfery się znajduje jego rola i wpływ na zdrowie jest pozytywny lub negatywny. </li>
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+  </div>
