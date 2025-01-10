@@ -243,3 +243,37 @@
       {% endif %}
     </div>
   </div>
+<!-- Wiersz 4: Średnie w województwie + guzik do porównań -->
+  <div class="row-container">
+    <div class="single-container">
+      {% if chosen_voiv %}  <!-- Warunek- sprawdza czy użytkownik wybrał woj.(jeśli tak wyświetla tytuł sekcji, jak nie ,,brak danych" -->
+        <h2>Średnie parametry w województwie: {{ chosen_voiv }}</h2>
+        {% if voivodeship_averages %} <!-- jeśli dane dla woj są dostępne, renderuje tabele z par. i średnimi jeśli nie komunikat... -->
+          <div class="table-container" style="overflow-x:auto;">
+            <table>
+              <thead> <!-- nagłówki -->
+                <tr>
+                  <th>Parametr</th>
+                  <th>Średnia (µg/m³)</th>
+                </tr>
+              </thead>
+              <tbody> <!-- wiersze -->
+                {% for param, p_data in voivodeship_averages.items() %}
+                <tr>
+                  <td>{{ param }}</td>
+                  <td class="{{ p_data.color_class }}">{{ p_data.value_str }}</td>
+                </tr>
+                {% endfor %} <!-- dane wierszy generowane są dynamicznie w pętli  -->
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <p>Brak danych o średnich w tym województwie.</p>
+        {% endif %}
+      {% else %}
+        <h2>Średnie parametry w województwie</h2>
+        <p>(Brak danych)</p>
+      {% endif %}
+      <button type="button" onclick="showComparison()">Pokaż porównanie województw</button> <!-- przycisk aktywuje funkcje JavaScript, która wyświetla porównanie województw -->
+    </div>
+  </div>
