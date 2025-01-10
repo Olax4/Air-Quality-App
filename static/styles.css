@@ -94,3 +94,14 @@ button {
 button:hover {
     background-color: #0056b3;
 }  /* Tło ciemnieje po najechaniu kursorem */
+
+/*  Kolory indeksu jakości powietrza */
+
+.level-very-good { background-color: #94e494; } /* zielony */
+.level-good { background-color: #b8ec9d; } /* jasny zielony */
+.level-fair { background-color: #ffec99; } /* jasny żółty */
+.level-moderate { background-color: #ffc98e; } /* jasny pomarańczowy */
+.level-poor { background-color: #ffa1a1; } /* jasny czerwony */
+.level-very-poor { background-color: #ff7272; } /* intensywny czerwony */
+.level-unknown { background-color: #dddddd; } /* jasny szary */
+
