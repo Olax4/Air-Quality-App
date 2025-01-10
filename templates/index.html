@@ -172,3 +172,35 @@
       </form>
     </div>
   </div>
+
+<!--  Najbliższa stacja-->
+  <div class="row-container"> <!--Tworzy zewnętrzny kontener i definiuje układ wierszy -->
+    <div class="single-container">  <!--Tworzy pojedynczy kontener wewnątrz wiersz i  odpowiada za stylizację-->
+      {% if error %}
+        <p class="error">{{ error }}</p>
+      {% endif %} <!-- warunek, jeśli np jest problem z wyszukiwaniem to wyświetla się komunikat błędu i będzie on kolorze czerwonym- klasa CSS error-->
+
+      {% if nearest_station %} <!--warunek Jeśli serwer przekazuje dane o najbliższej stacji -->
+        <h2>Najbliższa stacja: {{ nearest_station.stationName }}</h2> <!--Wyświetla nazwę stacji -->
+        <p>Odległość: {{ "%.2f"|format(distance) }} km</p> <!-- Wyświetla odległość do stacji w kilometrach, sformatowaną do dwóch miejsc po przecinku -->
+
+        <div class="table-container">
+          <h3>Bieżące pomiary (kolorowane)</h3> <!-- Nagłówek opisujący tabelę -->
+          <table>
+            <thead> <!--  Nagłówki -->
+              <tr>
+                <th>Parametr</th>
+                <th>Wartość</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for pollutant, p_data in pollutant_data.items() %} <!--Pętla Jinja2 generuje dynamiczne wiersze tabeli na podstawie danych przekazanych z backendu -->
+              <tr>
+                <td>{{ pollutant }}</td> <!--Wyświetla nazwę parametru -->
+                <td class="{{ p_data.color_class }}">{{ p_data.value_str }}</td> <!--Wyświetla wartość pomiaru -->
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
