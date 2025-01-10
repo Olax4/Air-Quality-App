@@ -135,7 +135,7 @@
               <th>Poziom informowania (µg/m³)</th>
               <th>Poziom alarmowy (µg/m³)</th>
             </tr>
-          </thead> 
+          </thead>
           <tbody> <!-- Wiersze z danymi-->
             <tr>
               <td>Ozon (O3)</td>
@@ -164,3 +164,11 @@
           </tbody>
         </table>
       </div>
+         <!-- Formularz miasta -->
+      <form method="post" style="margin-top:20px;"> <!-- Tworzy formularz, który przesyła dane metodą POST do serwera -->
+        <label for="city">Podaj miasto:</label> <!-- Etykieta powiązana z polem tekstowym o identyfikatorze city -->
+        <input type="text" id="city" name="city" required placeholder="Wpisz miasto"> <!--Pole tekstowe umożliwia użytkownikowi wpisanie nazwy miasta -->
+        <button type="submit">Sprawdź</button> <!--Przycisk przesyła dane formularza do serwera + Tekst "Sprawdź" widoczny na przycisku -->
+      </form>
+    </div>
+  </div>
