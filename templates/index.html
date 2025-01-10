@@ -173,7 +173,7 @@
     </div>
   </div>
 
-<!--  Najbliższa stacja-->
+<!-- Wiersz 2 Najbliższa stacja-->
   <div class="row-container"> <!--Tworzy zewnętrzny kontener i definiuje układ wierszy -->
     <div class="single-container">  <!--Tworzy pojedynczy kontener wewnątrz wiersz i  odpowiada za stylizację-->
       {% if error %}
@@ -223,6 +223,23 @@
             <li><strong>Ozon (O3)</strong> – jest jedną z odmian tlenu. Cząsteczki tlenu zbudowane są z dwóch atomów tlenu, natomiast ozon z trzech (O3). Ozon ma właściwości utleniające i w zależności od tego, w której warstwie atmosfery się znajduje jego rola i wpływ na zdrowie jest pozytywny lub negatywny. </li>
           </ul>
         </div>
+      {% endif %}
+    </div>
+  </div>
+
+ <!-- Wiersz 3: Wykresy godzinowe -->
+  <div class="row-container">
+    <div class="single-container">
+      {% if hourly_plot_data %}  <!--  Warunek Jinja2 -Sprawdza, czy istnieją dane dla wykresów godzinowych,Jeśli zmienna hourly_plot_data jest pusta lub nie istnieje, ta sekcja nie będzie renderowana -->
+        <h2>Wykresy godzinowe (00:00 – ostatnia pełnej godziny)</h2>  <!--Nagłówki -->
+        {% for pollutant, data_points in hourly_plot_data.items() %}
+          {% if data_points and data_points|length > 0 %} <!--Ten fragment przechodzi przez wszystkie parametry zanieczyszczeń i ich dane, a następnie przetwarza tylko te, które mają co najmniej jeden punkt danych. -->
+          <div class="chart-block"> <!--Tworzy kontener dla pojedynczego wykresu -->
+            <h3>{{ pollutant }}</h3> <!-- Wyświetla nazwę parametru -->
+            <canvas id="chart-{{ pollutant }}"></canvas> <!-- Dynamicznie tworzy element dla każdego parametru. -->
+          </div>
+          {% endif %}
+        {% endfor %}
       {% endif %}
     </div>
   </div>
