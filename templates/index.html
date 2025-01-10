@@ -277,3 +277,52 @@
       <button type="button" onclick="showComparison()">Pokaż porównanie województw</button> <!-- przycisk aktywuje funkcje JavaScript, która wyświetla porównanie województw -->
     </div>
   </div>
+<!-- Wiersz 5: Tabela zbiorcza - województwa w wierszach, parametry w kolumnach -->
+  <div id="compare-row" class="row-container" style="display:none;"> <!-- kontener dla sekcji tabeli zbiorczej z identyfikatorem umożliwiającym pokazanie ukrytej sekcji  -->
+    <div class="single-container">
+      <h2>Porównanie wszystkich województw</h2>
+      {% if all_voiv_averages %} <!-- warunek Jinja2- sprawdza czy istnieją dane zbiorczedla woj -->
+        {% set all_voivs = all_voiv_averages.keys()|list %} <!--pobiera klucze ze słownika -->
+        {% set sorted_voivs = all_voivs|sort %} <!--sortuje alfabetycznie -->
+        {% set all_params = [] %} <!-- lista par -->
+        {% for voiv in sorted_voivs %} <!-- dla każdego woj -->
+          {% for param in all_voiv_averages[voiv].keys() %} <!-- pobiera par jeśli jeszcze tego nie zrobił i dodaje do all_parm-->
+            {% if param not in all_params %}
+              {% set _ = all_params.append(param) %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+        {% set all_params = all_params|sort %}
+
+        <div class="table-container" style="overflow-x:auto;">
+          <table class="wide-table" style="min-width:800px;"> <!-- styliczacja tabeli -->
+            <thead>
+              <tr>
+                <th>Województwo</th>
+                {% for param in all_params %}
+                  <th>{{ param }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for voiv in sorted_voivs %}
+              <tr>
+                <td>{{ voiv|title }}</td>
+                {% for param in all_params %}
+                  {% set param_data = all_voiv_averages[voiv].get(param) %}
+                  {% if param_data %}
+                    <td class="{{ param_data.color_class }}">{{ param_data.value_str }}</td>
+                  {% else %}
+                    <td class="level-unknown">Brak</td>
+                  {% endif %}
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>Brak zbiorczych danych dla województw.</p>
+      {% endif %}
+    </div>
+  </div>
