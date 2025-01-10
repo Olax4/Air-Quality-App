@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap'); /* import czcionek */
+t@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap'); /* import czcionek */
 
 /* podstawowe zasady formatowania dla całej strony internetowej */
 body {
@@ -9,3 +9,20 @@ body {
     background-color: #f9f9f9;
     color: #333;
 }
+/* Nagłówki i tekst */
+
+h1, h2, h3 {
+    margin: 10px 0;  /* Odstępy pionowe ustawione na 10px */
+    text-align: center; /* Wyrównanie tekstu do środka */
+}
+
+p.error {
+    color: red; /* tekst wyróżniony kolorem czerwonym*/
+    font-weight: bold; /* pogrubiony */
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
