@@ -47,3 +47,33 @@ p {
     width: 100%; /* Kontener zajmuje całą szerokość, o ile mieści się w limicie  */
     text-align: center;
 }
+/* Tabele */
+
+/* Główny styl tabel */
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto; /* Dodaje przewijanie w poziomie dla tabeli, gdy jest zbyt szeroka */
+}
+
+table {
+    margin-top: 10px;
+    border-collapse: collapse;  /* Kolumny składają się bez odstępów */
+    width: 100%;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd; /* Komórki mają szare obramowania  */
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Wiersze parzyste mają jasnoszare tło */
+}
+ /* Szerokie tabele */
+
+ .wide-table {
+    table-layout: fixed;  /* Wszystkie kolumny mają równą szerokość */
+    min-width: 800px;  /*  Minimalna szerokość tabeli to 800px */
+    width: 100%;
+}
