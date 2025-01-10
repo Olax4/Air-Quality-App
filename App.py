@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request
 import requests
 import math
@@ -384,3 +383,6 @@ def index():
         voivodeship_averages=voivodeship_averages,
         all_voiv_averages=all_voiv_averages
     )
+
+if __name__ == '__main__':
+    app.run(debug=True)  # Uruchamia aplikację Flask w trybie debugowania
