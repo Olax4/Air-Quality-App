@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="pl"> <!-- Komentarz w HTML -->
+<head>
+    <head>
+  <meta charset="UTF-8"> <!-- Definiuje kodowanie znaków jako UTF-8, co umożliwia poprawne wyświetlanie polskich znaków i innych znaków specjalnych. -->
+  <title>Jakość Powietrza</title> <!-- tytuł strony -->
+  <link rel="preconnect" href="https://fonts.gstatic.com"> <!--ładowanie czcionek z serwera -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet"> <!-- import czcionki -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- ładowanie lokalnego pliku css -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" /> <!-- ładowanie zewnętrznego css do renderowania map -->
+</head>
