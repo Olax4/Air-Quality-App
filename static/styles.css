@@ -105,3 +105,13 @@ button:hover {
 .level-very-poor { background-color: #ff7272; } /* intensywny czerwony */
 .level-unknown { background-color: #dddddd; } /* jasny szary */
 
+/* Mapa */
+
+#map {
+    width: 100%;
+    height: 400px;  /* wysokość */
+    margin-top: 20px; /* odstęp */
+    border: 1px solid #ccc; /* szara ramka */
+    border-radius: 4px; /* zaokrąglone rogi */
+}
+
