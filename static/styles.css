@@ -77,3 +77,20 @@ tr:nth-child(even) {
     min-width: 800px;  /*  Minimalna szerokość tabeli to 800px */
     width: 100%;
 }
+
+ /* Przyciski */
+
+button {
+    margin-top: 20px;  /* Dodaje odstęp nad przyciskiem */
+    padding: 10px 20px;  /* Wewnątrz przycisku jest 10px w pionie i 20px w poziomie */
+    font-size: 13px;  /* Tekst ma rozmiar 13px */
+    color: #fff;  /* Biały tekst */
+    background-color: #007bff;  /* Niebieskie tło */
+    border: none;  /* Brak obramowania */
+    border-radius: 5px;  /* Zaokrąglone rogi (5px) */
+    cursor: pointer;  /* Kursor */
+}
+
+button:hover {
+    background-color: #0056b3;
+}  /* Tło ciemnieje po najechaniu kursorem */
