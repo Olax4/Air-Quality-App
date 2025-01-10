@@ -329,3 +329,92 @@
 <!-- Leaflet, Chart.js + skrypty -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> <!-- Import biblioteki Leaflet.js do obsługi map -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Import biblioteki Chart.js do rysowania wykresów -->
+
+<script>
+  /* Funkcja do wyświetlenia sekcji porównania województw */
+  function showComparison(){
+    document.getElementById('compare-row').style.display = 'flex'; // Ustawia styl display na 'flex', aby pokazać sekcję
+  }
+
+  /* Funkcja do wyświetlenia dodatkowych informacji o zanieczyszczeniach */
+  function showMoreInfo(){
+    document.getElementById('more-info').style.display = 'block'; // Ustawia styl display na 'block', aby pokazać informacje
+  }
+
+  /* Sprawdzanie, czy są dostępne współrzędne miasta */
+  {% if city_coords %}
+    // Inicjalizacja mapy Leaflet
+    var map = L.map('map').setView([{{ city_coords[0] }}, {{ city_coords[1] }}], 13); // Ustawia widok mapy na współrzędne miasta i poziom zoom
+
+    // Dodanie kafelków mapy z OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+      maxZoom:19, // Maksymalny poziom zoom
+      attribution:'&copy; OpenStreetMap' // Atrybucja OpenStreetMap
+    }).addTo(map);
+
+    // Dodanie markera dla miasta
+    L.marker([{{ city_coords[0] }}, {{ city_coords[1] }}])
+      .addTo(map)
+      .bindPopup('Wybrane miasto') // Dodanie okienka popup z opisem
+      .openPopup();
+
+    /* Sprawdzanie, czy są dostępne współrzędne najbliższej stacji */
+    {% if nearest_station and nearest_station.gegrLat and nearest_station.gegrLon %}
+      // Dodanie markera dla najbliższej stacji
+      L.marker([{{ nearest_station.gegrLat }}, {{ nearest_station.gegrLon }}])
+        .addTo(map)
+        .bindPopup('{{ nearest_station.stationName }}'); // Okienko popup z nazwą stacji
+
+      // Tworzenie linii między miastem a najbliższą stacją
+      var latlngs = [
+        [{{ city_coords[0] }}, {{ city_coords[1] }}], // Współrzędne miasta
+        [{{ nearest_station.gegrLat }}, {{ nearest_station.gegrLon }}] // Współrzędne stacji
+      ];
+      var polyline = L.polyline(latlngs, {color:'blue'}).addTo(map); // Linia w kolorze niebieskim
+      map.fitBounds(polyline.getBounds()); // Dopasowanie widoku mapy do zakresu linii
+    {% endif %}
+  {% endif %}
+
+  /* Sprawdzanie, czy są dostępne dane do wykresów */
+  {% if hourly_plot_data %}
+  (function(){
+    // Przekonwertowanie danych z serwera do formatu JSON
+    var hourlyData = {{ hourly_plot_data | tojson }};
+
+    // Iteracja przez dane dla każdego parametru zanieczyszczeń
+    for(const [pollutant, dataArray] of Object.entries(hourlyData)){
+      if(dataArray.length > 0){ // Sprawdzenie, czy dane są dostępne
+        let labels = dataArray.map(dp => dp[0]); // Wyciąganie godzin pomiarów jako etykiety osi X
+        let values = dataArray.map(dp => dp[1]); // Wyciąganie wartości pomiarów jako dane osi Y
+        let ctx = document.getElementById('chart-' + pollutant); // Pobranie elementu canvas dla wykresu danego parametru
+
+        if(ctx){
+          /* Tworzenie wykresu liniowego za pomocą Chart.js */
+          new Chart(ctx, {
+            type: 'line', // Typ wykresu: liniowy
+            data: {
+              labels: labels, // Etykiety osi X (godziny)
+              datasets: [{
+                label: pollutant, // Nazwa parametru zanieczyszczenia
+                data: values, // Dane wykresu (wartości pomiarów)
+                borderColor: 'rgba(54,162,235,1)', // Kolor linii
+                backgroundColor: 'rgba(54,162,235,0.2)', // Kolor wypełnienia
+                tension: 0.1, // Napięcie linii (płynność)
+                fill: false // Bez wypełnienia pod linią
+              }]
+            },
+            options: {
+              responsive: true, // Wykres dostosowuje się do rozmiaru okna
+              maintainAspectRatio: false, // Nie zachowuje proporcji, jeśli kontener zmienia rozmiar
+              scales: {
+                x: {title: {display: true, text: 'Godzina'}}, // Etykieta osi X
+                y: {title: {display: true, text: 'Wartość (µg/m³)'}, beginAtZero: true} // Etykieta osi Y z wartością początkową 0
+              }
+            }
+          });
+        }
+      }
+    }
+  })();
+  {% endif %}
+</script>
