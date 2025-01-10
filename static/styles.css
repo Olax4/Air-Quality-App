@@ -26,3 +26,12 @@ p {
     text-align: center;
 }
 
+/* Kontenery */
+.row-container {
+    display: flex; /* Ustawia elementy w elastycznym układzie */
+    justify-content: center; /* Centruje elementy w rzędzie */
+    flex-wrap: wrap; /* Wiersze automatycznie zawijają się */
+    padding: 20px; /* Dodaje wewnętrzny odstęp 20px */
+    box-sizing: border-box; /* Włącza liczenie paddingu  */
+}
+
