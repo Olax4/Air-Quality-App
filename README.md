@@ -32,18 +32,21 @@ Air Quality App to aplikacja webowa umożliwiająca monitorowanie jakości powie
 ### Narzędzia dodatkowe
 - **Ngrok:** Umożliwia tymczasowe udostępnienie aplikacji lokalnej w internecie. Przydatne do testowania i prezentacji aplikacji.
 
-### Struktura 
+### Struktura
 
 /Air-Quality-App/
-├── static/
-│   └── styles.css
-├── templates/
-│   └── index.html
-├── docs/
-│   └── Dokumentacja_Air_Quality_App.pdf
-├── App.py
-├── requirements.txt
-├── README.md
+- docs/
+  - Dokumentacja_Air_Quality_App.pdf
+- static/
+  - styles.css
+- templates/
+  - index.html
+- App.py
+- README.md
+- requirements.txt
+- test.py
+
+
 
 
 
