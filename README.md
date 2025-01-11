@@ -32,6 +32,22 @@ Air Quality App to aplikacja webowa umożliwiająca monitorowanie jakości powie
 ### Narzędzia dodatkowe
 - **Ngrok:** Umożliwia tymczasowe udostępnienie aplikacji lokalnej w internecie. Przydatne do testowania i prezentacji aplikacji.
 
+## Struktura 
+
+/Air-Quality-App/
+├── static/
+│   └── styles.css
+├── templates/
+│   └── index.html
+├── docs/
+│   └── Dokumentacja_Air_Quality_App.pdf
+├── App.py
+├── requirements.txt
+├── README.md
+
+
+
+
 ## Jak uruchomić projekt
 ### Wymagania
 - Python 3.x
@@ -60,13 +76,7 @@ Air Quality App to aplikacja webowa umożliwiająca monitorowanie jakości powie
      ngrok http 5000
      ```
    - Skopiuj wygenerowany publiczny URL i wklej go w przeglądarce.
-6. Otwórz przeglądarkę i przejdź pod adres:
-   ```
-   http://localhost:5000
-   ```
-   lub (jeśli używasz Ngrok):
-   ```
-   https://<your-ngrok-url>
+
    ```
 ## Przykłady działania
 1. **Wprowadzenie miasta**: Wpisz nazwę miasta w formularzu i kliknij "Sprawdź".
