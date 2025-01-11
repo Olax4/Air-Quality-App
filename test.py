@@ -81,3 +81,76 @@ def test_haversine():
 
     # Sprawdzenie poprawności obliczeń
     assert round(distance, 1) == 252.0  # Oczekiwana odległość: 252 km
+
+
+# Test dla find_nearest_stations
+def test_find_nearest_stations():
+    """
+    Test sprawdza działanie funkcji `find_nearest_stations`,
+    która sortuje stacje według odległości od zadanego punktu.
+    """
+    # Przygotowanie przykładowych stacji
+    stations = [
+        {"gegrLat": "52.2297", "gegrLon": "21.0122", "id": 1},  # Warszawa
+        {"gegrLat": "50.0647", "gegrLon": "19.9450", "id": 2},  # Kraków
+    ]
+
+    # Punkt odniesienia (51.0, 20.0) - bliżej Krakowa
+    nearest = find_nearest_stations(51.0, 20.0, stations)
+    print(nearest)  # Debugowanie wyniku
+
+    # Sprawdzenie, czy najbliższą stacją jest Kraków
+    assert nearest[0][0]["id"] == 2, f"Expected station 2, got {nearest[0][0]['id']}"
+
+
+# Test dla calculate_voivodeship_averages
+@patch("App.get_sensors") #mockujemy funkcję get_sensors
+@patch("App.get_all_values")  #Mockujemy funkcję get_all_values
+@patch("App.get_all_stations_cached")  #Mockujemy funkcję get_all_stations_cached
+def test_calculate_voivodeship_averages(mock_stations, mock_values, mock_sensors):
+    """
+    Test sprawdza poprawność obliczania średnich zanieczyszczeń dla województwa.
+    Mockujemy odpowiedzi funkcji pobierających dane o stacjach i czujnikach.
+    """
+    # Przygotowanie danych o stacjach w województwie
+    mock_stations.return_value = [
+        {"id": 1, "addressVoivodeship": "mazowieckie"},  # Stacja w Mazowieckim
+        {"id": 2, "addressVoivodeship": "śląskie"},  # Stacja w Śląskim (pomijana)
+    ]
+    # Przygotowanie danych o czujnikach
+    mock_sensors.return_value = [
+        {"id": 101, "param": {"paramName": "PM10"}},  # Czujnik PM10
+    ]
+    # Przygotowanie danych pomiarowych
+    mock_values.return_value = [10, 20, 30]  # Wartości PM10
+
+    # Wywołanie funkcji obliczającej średnie
+    averages = calculate_voivodeship_averages("mazowieckie")
+
+    # Sprawdzenie poprawności obliczeń
+    assert "PM10" in averages  # Sprawdzenie, czy PM10 jest w wynikach
+    assert averages["PM10"]["value_str"] == "20.00 µg/m³"  # Średnia PM10
+
+# Test dla get_latest_value
+@patch("App.requests.get")  # Mockujemy requests.get dla symulacji odpowiedzi API
+def test_get_latest_value(mock_get):
+    """
+    Test sprawdza poprawność działania funkcji `get_latest_value`,
+    która pobiera ostatnią dostępną wartość z API dla czujnika.
+    """
+    # Przygotowanie symulowanej odpowiedzi API
+    mock_response = MagicMock()
+    mock_response.status_code = 200
+    mock_response.json.return_value = {
+        "values": [
+            {"date": "2025-01-10 12:00:00", "value": 15.5},  # Ostatnia wartość
+            {"date": "2025-01-10 13:00:00", "value": None},  # Nowsza wartość, ale brak danych
+        ]
+    }
+    mock_get.return_value = mock_response
+
+    # Wywołanie funkcji
+    latest_value = get_latest_value(101)
+
+    # Sprawdzenie poprawności wyniku
+    assert latest_value == 15.5  # Spodziewana wartość to 15.5
