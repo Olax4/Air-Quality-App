@@ -52,3 +52,32 @@ def test_get_all_stations_cached(mock_get_all_stations):
     # Sprawdzenie poprawności odpowiedzi
     assert len(stations) == 1  # Spodziewana liczba stacji
     assert stations[0]["name"] == "Station 1"  # Sprawdzenie nazwy stacji
+
+# Test dla get_color_class
+def test_get_color_class():
+    """
+    Test sprawdza przypisywanie klas kolorów w zależności od wartości
+    i rodzaju parametru zanieczyszczenia.
+    """
+    # Testy dla PM10
+    assert get_color_class("PM10", 10) == "level-very-good"  # Bardzo dobry poziom
+    assert get_color_class("PM10", 55) == "level-fair"  # Umiarkowany poziom
+
+    # Testy dla NO2
+    assert get_color_class("NO2", 120) == "level-fair"  # Umiarkowany poziom
+
+    # Testy dla O3
+    assert get_color_class("O3", 200) == "level-poor"  # Zły poziom
+
+
+# Test dla haversine
+def test_haversine():
+    """
+    Test sprawdza poprawność obliczeń odległości między dwoma punktami
+    geograficznymi za pomocą funkcji `haversine`.
+    """
+    # Warszawa (52.2297, 21.0122) i Kraków (50.0647, 19.9450)
+    distance = haversine(52.2297, 21.0122, 50.0647, 19.9450)
+
+    # Sprawdzenie poprawności obliczeń
+    assert round(distance, 1) == 252.0  # Oczekiwana odległość: 252 km
